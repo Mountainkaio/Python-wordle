@@ -1,0 +1,15 @@
+
+purple = '\033[95m'
+blue = '\033[0;94m'
+l_blue = '\033[1;94m'
+red = '\033[91m'
+yellow = '\033[93m'
+green = '\033[0;92m'
+l_green = '\033[1;92m'
+cyan = '\033[96m'
+bold = '\033[1m'
+black = '\033[30m'
+underline = '\033[4m'
+white = '\033[37m'
+end = '\033[0m'
+
