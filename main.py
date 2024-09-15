@@ -7,53 +7,77 @@ with open("words.txt", "r") as read:
 
 final_word = []
 word = random.choice(words)
-print(word)
 slot1, slot2, slot3, slot4, slot5 = " ", " ", " ", " ", " "
 
+lives = 6
+
+alp = dict(
+a = 0,
+b = 0,
+c = 0,
+d = 0,
+e = 0,
+f = 0,
+g = 0,
+h = 0,
+i = 0,
+j = 0 ,
+k = 0,
+l = 0,
+m = 0,
+n = 0,
+o = 0,
+p = 0,
+q = 0,
+r = 0,
+s = 0,
+t = 0,
+u = 0,
+v = 0,
+w = 0,
+x = 0,
+y = 0,
+z = 0,
+)
+
+def check_letters():
+	global word, alp
+	for i in range(len(word)):
+		alp[word[i]] += 1
+
 def print_word():
-	global word, final_word, slot1, slot2, slot3, slot4, slot5
+	global word, final_word, slot1, slot2, slot3, slot4, slot5, alp, lives
+	word_list = list(word)
+	
 	final_word = []
-	word = list(word)
+
+	alp_copy = alp.copy()
+
+	for i in range(5):
+		slot = [slot1, slot2, slot3, slot4, slot5][i]
+		if slot == word_list[i] and alp_copy[slot] > 0:
+			alp_copy[slot] -= 1
+			final_word.append(f"{colors.green}{slot}{colors.end}")
+		else:
+			final_word.append(None)
+	for i in range(5):
+		slot = [slot1, slot2, slot3, slot4, slot5][i]
+		if final_word[i] is None:
+			if slot in word_list and alp_copy[slot] > 0:
+				if word_list.count(slot) > final_word.count(f"{colors.green}{slot}{colors.end}") + final_word.count(f"{colors.yellow}{slot}{colors.end}"):
+					alp_copy[slot] -= 1
+					final_word[i] = f"{colors.yellow}{slot}{colors.end}"
+				else:
+					final_word[i] = f"{colors.red}{slot}{colors.end}"
+			else:
+				final_word[i] = f"{colors.red}{slot}{colors.end}"
 	
-	if slot1 in word and slot1 == word[0]:
-		final_word.append(f"{colors.green}{slot1}{colors.end}")
-	elif slot1 in word and slot1 != word[0]:
-		final_word.append(f"{colors.yellow}{slot1}{colors.end}")
-	else:
-		final_word.append(f"{colors.red}{slot1}{colors.end}")
-	
-	if slot2 in word and slot2 == word[1]:
-		final_word.append(f"{colors.green}{slot2}{colors.end}")
-	elif slot2 in word and slot2 != word[1]:
-		final_word.append(f"{colors.yellow}{slot2}{colors.end}")
-	else:
-		final_word.append(f"{colors.red}{slot2}{colors.end}")
-	
-	if slot3 in word and slot3 == word[2]:
-		final_word.append(f"{colors.green}{slot3}{colors.end}")
-	elif slot3 in word and slot3 != word[2]:
-		final_word.append(f"{colors.yellow}{slot3}{colors.end}")
-	else:
-		final_word.append(f"{colors.red}{slot3}{colors.end}")
-	
-	if slot4 in word and slot4 == word[3]:
-		final_word.append(f"{colors.green}{slot4}{colors.end}")
-	elif slot4 in word and slot4 != word[3]:
-		final_word.append(f"{colors.yellow}{slot4}{colors.end}")
-	else:
-		final_word.append(f"{colors.red}{slot4}{colors.end}")
-		
-	if slot5 in word and slot5 == word[4]:
-		final_word.append(f"{colors.green}{slot5}{colors.end}")
-	elif slot5 in word and slot5 != word[4]:
-		final_word.append(f"{colors.yellow}{slot5}{colors.end}")
-	else:
-		final_word.append(f"{colors.red}{slot5}{colors.end}")
-		
 	print(*final_word)
-		
+	return final_word
+
 while True:
+	print(f"lives: {lives}")
+	check_letters()
 	slot1, slot2, slot3, slot4, slot5 = input("space the letters with \" \":\n").split(" ")
 	print_word()
-	
 	
